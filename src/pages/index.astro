@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../site';
+
+const featured = (await getCollection('projects', ({ data }) => data.featured))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout>
+  <section class="hero">
+    <p class="eyebrow">{site.role}</p>
+    <h1>Hi, I'm {site.name}.</h1>
+    <p class="lead muted">{site.tagline}</p>
+    <div class="actions">
+      <a class="button" href="/projects/">See my work</a>
+      <a class="button ghost" href={`mailto:${site.email}`}>Get in touch</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Featured projects</h2>
+      <a href="/projects/">All projects →</a>
+    </div>
+    <div class="grid">
+      {featured.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-bottom: 72px;
+  }
+  .eyebrow {
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  .lead {
+    font-size: 1.25rem;
+    max-width: 36ch;
+    margin: 0 0 28px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .button.ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+</style>

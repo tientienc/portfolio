@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { title, summary, date, tags, link, repo } = project.data;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={title} description={summary}>
+  <article>
+    <a class="back" href="/projects/">← All projects</a>
+    <h1>{title}</h1>
+    <p class="lead muted">{summary}</p>
+    <div class="meta">
+      <span class="muted">{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</span>
+      <ul class="tags">{tags.map((tag) => <li>{tag}</li>)}</ul>
+    </div>
+    {(link || repo) && (
+      <p class="links">
+        {link && <a href={link}>Visit site</a>}
+        {repo && <a href={repo}>Source code</a>}
+      </p>
+    )}
+    <div class="body">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    max-width: 68ch;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 24px;
+    text-decoration: none;
+  }
+  .lead {
+    font-size: 1.2rem;
+    margin: 0 0 16px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .links {
+    display: flex;
+    gap: 16px;
+  }
+  .body :global(h2) {
+    margin-top: 1.6em;
+  }
+</style>
