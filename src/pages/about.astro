@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site';
+---
+
+<BaseLayout title="About" description={`About ${site.name}`}>
+  <article>
+    <h1>About me</h1>
+    <p class="lead">
+      I'm {site.name}, a {site.role.toLowerCase()}. Replace this paragraph with a short introduction:
+      what you do, what you care about, and what you're looking for next.
+    </p>
+
+    <h2>What I work with</h2>
+    <ul class="tags skills">
+      <li>JavaScript</li>
+      <li>TypeScript</li>
+      <li>Flutter</li>
+      <li>Astro</li>
+    </ul>
+
+    <h2>Get in touch</h2>
+    <p>
+      The best way to reach me is by email at <a href={`mailto:${site.email}`}>{site.email}</a>.
+      You can also find me on{' '}
+      {site.links.map((link, i) => (
+        <>{i > 0 && ' and '}<a href={link.href}>{link.label}</a></>
+      ))}.
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    max-width: 64ch;
+  }
+  .lead {
+    font-size: 1.2rem;
+  }
+  h2 {
+    margin-top: 2em;
+  }
+  .skills {
+    margin-top: 12px;
+  }
+</style>
