@@ -9,3 +9,8 @@ export const site = {
     { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
   ],
 };
+
+// Prefix an internal path with the site's base path (e.g. "/portfolio/").
+// Use this for every internal link so it works on GitHub Pages.
+export const url = (path = '/') =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;

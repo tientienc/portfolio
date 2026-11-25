@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { url } from '../../site';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -17,7 +18,7 @@ const { Content } = await render(project);
 
 <BaseLayout title={title} description={summary}>
   <article>
-    <a class="back" href="/projects/">← All projects</a>
+    <a class="back" href={url('/projects/')}>← All projects</a>
     <h1>{title}</h1>
     <p class="lead muted">{summary}</p>
     <div class="meta">

@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { url } from '../site';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -9,7 +10,7 @@ const { project } = Astro.props;
 const { title, summary, tags, date } = project.data;
 ---
 
-<a class="card" href={`/projects/${project.id}/`}>
+<a class="card" href={url(`/projects/${project.id}/`)}>
   <span class="year muted">{date.getFullYear()}</span>
   <h3>{title}</h3>
   <p class="muted">{summary}</p>
