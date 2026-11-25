@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site } from '../site';
+import { site, url } from '../site';
 
 interface Props {
   title?: string;
@@ -12,13 +12,13 @@ const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.r
 const path = Astro.url.pathname;
 
 const nav = [
-  { label: 'Home', href: '/' },
-  { label: 'Projects', href: '/projects/' },
-  { label: 'About', href: '/about/' },
+  { label: 'Home', href: url('/') },
+  { label: 'Projects', href: url('/projects/') },
+  { label: 'About', href: url('/about/') },
 ];
 
 const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href);
+  href === url('/') ? path === url('/') : path.startsWith(href);
 ---
 
 <!doctype html>
@@ -27,15 +27,15 @@ const isActive = (href: string) =>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <link rel="icon" href={url('/favicon.ico')} />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
   <body>
     <header class="site-header">
       <div class="container bar">
-        <a class="brand" href="/">{site.name}</a>
+        <a class="brand" href={url('/')}>{site.name}</a>
         <nav aria-label="Main">
           {nav.map((item) => (
             <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
