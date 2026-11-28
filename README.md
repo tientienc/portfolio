@@ -1,6 +1,7 @@
 # portfolio
 
 My personal portfolio site, built with [Astro](https://astro.build).
+https://tientienc.github.io/portfolio/
 
 ## Run it locally
 
